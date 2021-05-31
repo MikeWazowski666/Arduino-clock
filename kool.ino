@@ -1,18 +1,15 @@
-//#include <>
 #define S_LATCH 11
 #define S_CLK 12
 #define S_DATA 10
 #define SDA A4
 #define SCL A5
 
-int one = 0b00000001;
-
 void setup(){
     pinMode(S_CLK, OUTPUT);
     pinMode(S_LATCH, OUTPUT);
     pinMode(S_DATA, OUTPUT);
     Serial.begin(9600);
-    String a = String(13, BIN);
+    String a = String(13, BIN); // convert string to binary
     Serial.println(a.length());
     
     // clearing all registers
@@ -45,6 +42,8 @@ void setup(){
 
 void loop(){}
     /*
+    // crates a nice small loop
+    
     for (int i = 0; i < 32; i++){
         digitalWrite(S_DATA, HIGH);
         digitalWrite(S_LATCH, HIGH);
