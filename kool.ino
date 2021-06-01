@@ -98,13 +98,14 @@ void loop(){
         Serial.println();
     } else {
         if (RTC.chipPresent()) {
-            Serial.println('================================================')
+            Serial.println('================================================');
             Serial.println("The DS1307 is stopped.");
-            Serial.println('================================================')
+            Serial.println('================================================');
+            Serial.println();
         } else {
-            Serial.println('================================================')
+            Serial.println('================================================');
             Serial.println("DS1307 read error!  Please check the circuitry.");
-            Serial.println('================================================')
+            Serial.println('================================================');
             Serial.println();
         }
         delay(9000);
