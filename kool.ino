@@ -10,6 +10,7 @@ void toBin(String b){
     return a
 }
 */
+char myStr[] = "this is a test";
 
 void setup(){
     pinMode(S_CLK, OUTPUT);
@@ -29,6 +30,19 @@ void setup(){
         digitalWrite(S_CLK, LOW);
     }
     
+    for (byte i = 0; i < sizeof(myStr) - 1; i++) {
+      Serial.print(i, DEC);
+        Serial.print(" = ");
+        Serial.write(myStr[i]);
+        Serial.println();
+    }
+
+        /*
+    digitalWrite(S_DATA, LOW);
+    digitalWrite(S_LATCH, HIGH);
+    digitalWrite(S_LATCH, LOW);
+    digitalWrite(S_CLK, HIGH);
+    digitalWrite(S_CLK, LOW);
     // output
     /*
     for (int g = 0; g < a.length(); g++){
@@ -69,8 +83,8 @@ byte nine1 = 0b0010;
 byte nine2 = 0b1111;
 
 
-void loop(){
-    
+void loop(){}
+    /*
     // crates a nice small loop
 
     for (int i = 0; i < 32; i++){
