@@ -91,6 +91,8 @@ void setup(){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
+
+    // only for demo usage
     for (int i = 0; i < 4; i++){
     //dataToClock(null1[]);
     
