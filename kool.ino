@@ -93,15 +93,15 @@ void setup(){
     }
     for (int i = 0; i < 4; i++){
     //dataToClock(null1[]);
-    }
-    for (int a = 0; a < sizeof(null1[]); a++){
-        tempFunc(null1[a]);
-    }
-
-    for (int j = 0; j < sizeof(null2[]); j++){
-        tempFunc(null2[j])
-    }
     
+        for (int a = 0; a < sizeof(null1[]); a++){
+            tempFunc(null1[a]);
+        }
+
+        for (int j = 0; j < sizeof(null2[]); j++){
+            tempFunc(null2[j])
+        }
+    }
 }  
 
 
