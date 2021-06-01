@@ -1,35 +1,50 @@
+#include <Wire.h>
+#include <TimeLib.h>
+#include <DS1307RTC.h>
+
 #define S_LATCH 11
 #define S_CLK 12
 #define S_DATA 10
 #define SDA A4
 #define SCL A5
 
-/*
-void toBin(String b){
-    String a = String(b, BIN);
-    return a
+byte one1[]   = {0, 0, 1, 0}; 
+byte one2[]   = {0, 0, 0, 1}; 
+byte two1[]   = {0, 1, 1, 0}; 
+byte two2[]   = {0, 0, 1, 1}; 
+byte three1[] = {0, 1, 1, 0}; 
+byte three2[] = {1, 0, 1, 1}; 
+byte four1[]  = {0, 1, 0, 0}; 
+byte four2[]  = {1, 1, 0, 1}; 
+byte five1[]  = {0, 1, 1, 0}; 
+byte five2[]  = {1, 1, 1, 0}; 
+byte six1[]   = {0, 1, 1, 1}; 
+byte six2[]   = {1, 1, 1, 0}; 
+byte seven1[] = {0, 1, 0, 0}; 
+byte seven2[] = {0, 0, 1, 1}; 
+byte eight1[] = {0, 1, 1, 1}; 
+byte eight2[] = {1, 1, 1, 1}; 
+byte nine1[]  = {0, 1, 0, 0}; 
+byte nine2[]  = {1, 1, 1, 1};
+byte null1[]  = {1, 1, 1, 0};
+byte null2[]  = {0, 1, 1, 1};
+
+void dataToClock(array val1){
+    for (int i = 0; i < sizeof(val1); i++){
+        //Serial.print(one1[i]); //use for debugging
+        if (one1[i] == 1){
+            digitalWrite(S_DATA, HIGH);
+            //Serial.print('works'); //use for debugging
+        } else {
+            digitalWrite(S_DATA, LOW);
+        }
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        delay(300);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+    }
 }
-*/
-
-byte one1[]   = {0, 0, 1, 0}; //0b0010;
-byte one2[]   = {0, 0, 0, 1}; //0b1000;
-byte two1[]   = {0, 1, 1, 0}; //0b0110;
-byte two2[]   = {0, 0, 1, 1}; //0b1100;
-byte three1[] = {0, 1, 1, 0}; //0b0110;
-byte three2[] = {1, 0, 1, 1}; //0b1101;
-byte four1[]  = {0, 1, 0, 0}; //0b0010;
-byte four2[]  = {1, 1, 0, 1}; //0b1011;
-byte five1[]  = {0, 1, 1, 0}; //0b0110;
-byte five2[]  = {1, 1, 1, 0}; //0b0111;
-byte six1[]   = {0, 1, 1, 1}; //0b1110;
-byte six2[]   = {1, 1, 1, 0}; //0b0111;
-byte seven1[] = {0, 1, 0, 0}; //0b0010;
-byte seven2[] = {0, 0, 1, 1}; //0b1100;
-byte eight1[] = {0, 1, 1, 1}; //0b1110;
-byte eight2[] = {1, 1, 1, 1}; //0b1111;
-byte nine1[]  = {0, 1, 0, 0}; //0b0010;
-byte nine2[]  = {1, 1, 1, 1}; //0b1111;
-
 
 
 void setup(){
@@ -38,7 +53,6 @@ void setup(){
     pinMode(S_DATA, OUTPUT);
     Serial.begin(9600);
     //String a = String(13, BIN); // convert string to binary
-    //Serial.println(a.length());
     
     // clearing all registers
     for (int i = 0; i < 33; i++){
@@ -48,22 +62,13 @@ void setup(){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
-
-    for (int i = 0; i < sizeof(one1); i++){
-        //Serial.print(one1[i]); //check if for loop works
-        if (one1[i] == 1){
-            digitalWrite(S_DATA, HIGH);
-            //Serial.print('works'); //check if statement works
-        } else {
-            digitalWrite(S_DATA, LOW);
-        }
-        Serial.println();
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        delay(300);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-    }    
+    for (int i = 0; i < 4; i++){
+        dataToClock(null1[]);
+    }
+    for (int i = 0; i < 4; i++){
+        dataToClock(null2[]);
+    }
+}  
     /*
     digitalWrite(S_DATA, LOW);
     digitalWrite(S_LATCH, HIGH);
@@ -87,10 +92,43 @@ void setup(){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
-    */
 }
+    */
 
-void loop(){}
+
+void loop(){
+    delay(1000);
+}
+/*
+    tmElements_t tm;
+
+    if (RTC.read(tm)) {
+        Serial.print("Ok, Time = ");
+        print2digits(tm.Hour);
+        Serial.write(':');
+        print2digits(tm.Minute);
+        Serial.write(':');
+        print2digits(tm.Second);
+        Serial.print(", Date (D/M/Y) = ");
+        Serial.print(tm.Day);
+        Serial.write('/');
+        Serial.print(tm.Month);
+        Serial.write('/');
+        Serial.print(tmYearToCalendar(tm.Year));
+        Serial.println();
+    } else {
+        if (RTC.chipPresent()) {
+            Serial.println("The DS1307 is stopped.  Please run the SetTime");
+            Serial.println("example to initialize the time and begin running.");
+            Serial.println();
+        } else {
+            Serial.println("DS1307 read error!  Please check the circuitry.");
+            Serial.println();
+        }
+        delay(9000);
+    }
+    delay(1000);
+}
 /*
     for (int i = 0; i < sizeof(one1); i++){
         //Serial.print(one1[i]); //check if for loop works
