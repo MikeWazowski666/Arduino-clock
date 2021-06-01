@@ -10,24 +10,25 @@ void toBin(String b){
     return a
 }
 */
-byte one1[] = {0, 0, 1, 0}; //0b0010;
-byte one2   = 0b1000;
-byte two1   = 0b0110;
-byte two2   = 0b1100;
-byte three1 = 0b0110;
-byte three2 = 0b1101;
-byte four1  = 0b0010;
-byte four2  = 0b1011;
-byte five1  = 0b0110;
-byte five2  = 0b0111;
-byte six1   = 0b1110;
-byte six2   = 0b0111;
-byte seven1 = 0b0010;
-byte seven2 = 0b1100;
-byte eight1 = 0b1110;
-byte eight2 = 0b1111;
-byte nine1  = 0b0010;
-byte nine2  = 0b1111;
+
+byte one1[]   = {0, 0, 1, 0}; //0b0010;
+byte one2[]   = {0, 0, 0, 1}; //0b1000;
+byte two1[]   = {0, 1, 1, 0};//0b0110;
+byte two2[]   = {0, 0, 1, 1};//0b1100;
+byte three1[] = {0, 1, 1, 0};//0b0110;
+byte three2[] = {1, 0, 1, 1};//0b1101;
+byte four1[]  = {0, 1, 0, 0};//0b0010;
+byte four2[]  = {1, 1, 0, 1};//0b1011;
+byte five1[]  = {0, 1, 1, 0};//0b0110;
+byte five2[]  = {1, 1, 1, 0};//0b0111;
+byte six1[]   = {0, 1, 1, 1};//0b1110;
+byte six2[]   = {1, 1, 1, 0};//0b0111;
+byte seven1[] = {0, 1, 0, 0};//0b0010;
+byte seven2[] = {0, 0, 1, 1};//0b1100;
+byte eight1[] = {0, 1, 1, 1};//0b1110;
+byte eight2[] = {1, 1, 1, 1};//0b1111;
+byte nine1[]  = {0, 1, 0, 0};//0b0010;
+byte nine2[]  = {1, 1, 1, 1};//0b1111;
 
 
 
@@ -91,9 +92,10 @@ void loop(){
         digitalWrite(S_LATCH, HIGH);
         digitalWrite(S_LATCH, LOW);
         delay(300);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
     }
-    digitalWrite(S_CLK, HIGH);
-    digitalWrite(S_CLK, LOW);
+    
 
 }
     /*
@@ -156,8 +158,7 @@ int nine1 = 2;
 int nine2 = 16;
 
 
-
+/* NOTES:
 vaata üle `toInt()`
-
 
 */
