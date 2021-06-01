@@ -10,14 +10,33 @@ void toBin(String b){
     return a
 }
 */
-int one1 = 2;
+byte one1[] = {0, 0, 1, 0}; //0b0010;
+byte one2   = 0b1000;
+byte two1   = 0b0110;
+byte two2   = 0b1100;
+byte three1 = 0b0110;
+byte three2 = 0b1101;
+byte four1  = 0b0010;
+byte four2  = 0b1011;
+byte five1  = 0b0110;
+byte five2  = 0b0111;
+byte six1   = 0b1110;
+byte six2   = 0b0111;
+byte seven1 = 0b0010;
+byte seven2 = 0b1100;
+byte eight1 = 0b1110;
+byte eight2 = 0b1111;
+byte nine1  = 0b0010;
+byte nine2  = 0b1111;
+
+
 
 void setup(){
     pinMode(S_CLK, OUTPUT);
     pinMode(S_LATCH, OUTPUT);
     pinMode(S_DATA, OUTPUT);
     Serial.begin(9600);
-    String a = String(13, BIN); // convert string to binary
+    //String a = String(13, BIN); // convert string to binary
     //Serial.println(a.length());
     
     // clearing all registers
@@ -30,9 +49,12 @@ void setup(){
         digitalWrite(S_CLK, LOW);
     }
     
-    Serial.print(one1, DEC);
+    //Serial.print(one1, BIN);
+    for (int i = 0; i < sizeof(one1); i++){
+        Serial.println(one1[i]);
+    }
 
-        /*
+    /*
     digitalWrite(S_DATA, LOW);
     digitalWrite(S_LATCH, HIGH);
     digitalWrite(S_LATCH, LOW);
@@ -57,25 +79,6 @@ void setup(){
     }
     */
 }
-
-byte one2 = 0b1000;
-byte two1 = 0b0110;
-byte two2 = 0b1100;
-byte three1 = 0b0110;
-byte three2 = 0b1101;
-byte four1 = 0b0010;
-byte four2 = 0b1011;
-byte five1 = 0b0110;
-byte five2 = 0b0111;
-byte six1 = 0b1110;
-byte six2 = 0b0111;
-byte seven1 = 0b0010;
-byte seven2 = 0b1100;
-byte eight1 = 0b1110;
-byte eight2 = 0b1111;
-byte nine1 = 0b0010;
-byte nine2 = 0b1111;
-
 
 void loop(){}
     /*
@@ -118,7 +121,24 @@ void aa(int a){
     }
 }
 
-
+int one1 = 2;
+int one2 = 8;
+int two1 = 6;
+int two2 = 12;
+int three1 = 6;
+int three2 = 13;
+int four1 = 2;
+int four2 = 11;
+int five1 = 6;
+int five2 = 7;
+int six1 = 14;
+int six2 = 7;
+int seven1 = 2;
+int seven2 = 12;
+int eight1 = 14;
+int eight2 = 16;
+int nine1 = 2;
+int nine2 = 16;
 
 
 
