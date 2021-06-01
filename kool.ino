@@ -10,7 +10,7 @@ void setup(){
     pinMode(S_DATA, OUTPUT);
     Serial.begin(9600);
     String a = String(13, BIN); // convert string to binary
-    Serial.println(a.length());
+    //Serial.println(a.length());
     
     // clearing all registers
     
@@ -25,7 +25,7 @@ void setup(){
     // output
 
     for (int g = 0; g < a.length(); g++){
-        Serial.println(a.substring(g, g + 1));
+        //Serial.println(a.substring(g, g + 1));
         String b = a.substring(g, g + 1).toInt();
         digitalWrite(S_DATA, LOW);
         if (b == 1){
