@@ -26,9 +26,9 @@ void setup(){
 
     for (int g = 0; g < a.length(); g++){
         Serial.println(a.substring(g, g + 1));
-        String b = a.substring(g, g + 1);
+        String b = a.substring(g, g + 1).toInt();
         digitalWrite(S_DATA, LOW);
-        if (b == '1'){
+        if (b == 1){
             digitalWrite(S_DATA, HIGH);
         } else {
             digitalWrite(S_DATA, LOW);
@@ -43,7 +43,7 @@ void setup(){
 void loop(){}
     /*
     // crates a nice small loop
-    
+
     for (int i = 0; i < 32; i++){
         digitalWrite(S_DATA, HIGH);
         digitalWrite(S_LATCH, HIGH);
@@ -88,4 +88,6 @@ void toBin(String b){
 
 
 vaata üle `toInt()`
+
+
 */
