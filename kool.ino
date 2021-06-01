@@ -30,13 +30,13 @@ void setup(){
     }
     
     // output
-
+    /*
     for (int g = 0; g < a.length(); g++){
         //Serial.println(a.substring(g, g + 1));
-        int b = a.substring(g, g + 1);
+        String b = a.substring(g, g + 1);
         delay(300);
         digitalWrite(S_DATA, LOW);
-        if (b == 1){
+        if (b == '1'){
             digitalWrite(S_DATA, HIGH);
         } else {
             digitalWrite(S_DATA, LOW);
@@ -46,10 +46,11 @@ void setup(){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
+    */
 }
 
 void loop(){}
-    /*
+    
     // crates a nice small loop
 
     for (int i = 0; i < 32; i++){
@@ -69,7 +70,7 @@ void loop(){}
         delay(400);
     }
 }
-
+/*
 
 esimene nr = 0b0011 + offset + 0b1000
 
@@ -88,6 +89,9 @@ void aa(int a){
         }
     }
 }
+
+
+byte one1 = 0b
 
 
 
