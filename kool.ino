@@ -56,12 +56,25 @@ void toDigits(int number) {
 }
 */
 
+void tempFunc(int var1){
+    if (var1 == 1){
+        digitalWrite(S_DATA, HIGH);
+    } else {
+        digitalWrite(S_DATA, LOW);
+    }
+    digitalWrite(S_LATCH, HIGH);
+    digitalWrite(S_LATCH, LOW);
+    digitalWrite(S_CLK, HIGH);
+    digitalWrite(S_CLK, LOW);
+    return 0;
+}
 
 void print2digits(int number) {
   if (number >= 0 && number < 10) {
     Serial.write('0');
   }
   Serial.print(number);
+  return 0;
 }
 
 void setup(){
@@ -79,11 +92,16 @@ void setup(){
         digitalWrite(S_CLK, LOW);
     }
     for (int i = 0; i < 4; i++){
-        //dataToClock(null1[]);
+    //dataToClock(null1[]);
     }
-    for (int i = 0; i < 4; i++){
-        //dataToClock(null2[]);
+    for (int a = 0; a < sizeof(null1[]); a++){
+        tempFunc(null1[a]);
     }
+
+    for (int j = 0; j < sizeof(null2[]); j++){
+        tempFunc(null2[j])
+    }
+    
 }  
 
 
