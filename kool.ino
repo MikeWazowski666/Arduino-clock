@@ -49,6 +49,26 @@ void setup(){
     */
 }
 
+byte one1 = 0b0010;
+byte one2 = 0b1000;
+byte two1 = 0b0110;
+byte two2 = 0b1100;
+byte three1 = 0b0110;
+byte three2 = 0b1101;
+byte four1 = 0b0010;
+byte four2 = 0b1011;
+byte five1 = 0b0110;
+byte five2 = 0b0111;
+byte six1 = 0b1110;
+byte six2 = 0b0111;
+byte seven1 = 0b0010;
+byte seven2 = 0b1100;
+byte eight1 = 0b1110;
+byte eight2 = 0b1111;
+byte nine1 = 0b0010;
+byte nine2 = 0b1111;
+
+
 void loop(){
     
     // crates a nice small loop
@@ -90,8 +110,6 @@ void aa(int a){
     }
 }
 
-
-byte one1 = 0b
 
 
 
