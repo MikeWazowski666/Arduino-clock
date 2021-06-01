@@ -4,6 +4,13 @@
 #define SDA A4
 #define SCL A5
 
+/*
+void toBin(String b){
+    String a = String(b, BIN);
+    return a
+}
+*/
+
 void setup(){
     pinMode(S_CLK, OUTPUT);
     pinMode(S_LATCH, OUTPUT);
@@ -26,7 +33,8 @@ void setup(){
 
     for (int g = 0; g < a.length(); g++){
         //Serial.println(a.substring(g, g + 1));
-        String b = a.substring(g, g + 1).toInt();
+        int b = a.substring(g, g + 1);
+        delay(300);
         digitalWrite(S_DATA, LOW);
         if (b == 1){
             digitalWrite(S_DATA, HIGH);
@@ -81,10 +89,7 @@ void aa(int a){
     }
 }
 
-void toBin(String b){
-    String a = String(b, BIN);
-    return a
-}
+
 
 
 vaata üle `toInt()`
