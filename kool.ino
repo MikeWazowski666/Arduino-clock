@@ -51,13 +51,14 @@ void setup(){
     
     //Serial.print(one1, BIN);
     for (int i = 0; i < sizeof(one1); i++){
-        Serial.println(one1[i]);
+        Serial.print(one1[i]);
         if (one1[i] == 1){
             digitalWrite(S_DATA, HIGH);
+            Serial.write(' yes');
         } else {
             digitalWrite(S_DATA, LOW);
         }
-        
+        Serial.println();
         digitalWrite(S_LATCH, HIGH);
         digitalWrite(S_LATCH, LOW);
 
