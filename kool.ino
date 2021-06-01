@@ -41,7 +41,6 @@ void setup(){
     //Serial.println(a.length());
     
     // clearing all registers
-    
     for (int i = 0; i < 33; i++){
         digitalWrite(S_DATA, LOW);
         digitalWrite(S_LATCH, HIGH);
@@ -49,9 +48,22 @@ void setup(){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
-    
-    //Serial.print(one1, BIN);
-    
+
+    for (int i = 0; i < sizeof(one1); i++){
+        //Serial.print(one1[i]); //check if for loop works
+        if (one1[i] == 1){
+            digitalWrite(S_DATA, HIGH);
+            //Serial.print('works'); //check if statement works
+        } else {
+            digitalWrite(S_DATA, LOW);
+        }
+        Serial.println();
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        delay(300);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+    }    
     /*
     digitalWrite(S_DATA, LOW);
     digitalWrite(S_LATCH, HIGH);
@@ -78,8 +90,8 @@ void setup(){
     */
 }
 
-void loop(){
- 
+void loop(){}
+/*
     for (int i = 0; i < sizeof(one1); i++){
         //Serial.print(one1[i]); //check if for loop works
         if (one1[i] == 1){
