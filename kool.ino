@@ -61,7 +61,7 @@ void loop(){}
         digitalWrite(S_CLK, LOW);
         delay(400);
     }
-    for (int i = 0; i < 32; i++){
+    for (int l = 0; l < 32; l++){
         digitalWrite(S_DATA, LOW);
         digitalWrite(S_LATCH, HIGH);
         digitalWrite(S_LATCH, LOW);
