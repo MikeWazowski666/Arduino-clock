@@ -29,6 +29,7 @@ byte nine2[]  = {1, 1, 1, 1};
 byte null1[]  = {1, 1, 1, 0};
 byte null2[]  = {0, 1, 1, 1};
 
+/*
 void dataToClock(array val1){
     for (int i = 0; i < sizeof(val1); i++){
         //Serial.print(one1[i]); //use for debugging
@@ -46,6 +47,16 @@ void dataToClock(array val1){
     }
 }
 
+void toDigits(int number) {
+  if (number >= 0 && number < 10) {
+    int a = 0 + number;
+    return a;
+  }
+  return number;
+}
+*/
+
+
 void print2digits(int number) {
   if (number >= 0 && number < 10) {
     Serial.write('0');
@@ -58,8 +69,7 @@ void setup(){
     pinMode(S_LATCH, OUTPUT);
     pinMode(S_DATA, OUTPUT);
     Serial.begin(9600);
-    //String a = String(13, BIN); // convert string to binary
-    
+
     // clearing all registers
     for (int i = 0; i < 33; i++){
         digitalWrite(S_DATA, LOW);
@@ -69,13 +79,12 @@ void setup(){
         digitalWrite(S_CLK, LOW);
     }
     for (int i = 0; i < 4; i++){
-        dataToClock(null1[]);
+        //dataToClock(null1[]);
     }
     for (int i = 0; i < 4; i++){
-        dataToClock(null2[]);
+        //dataToClock(null2[]);
     }
 }  
-
 
 
 void loop(){
@@ -121,11 +130,6 @@ void loop(){
     }
 }
 /*
-
-esimene nr = 0b0011 + offset + 0b1000
-
-
-
 void aa(int a){
     for (int i = 0; i < length(toBin(a); i++){
         if (toBin(a)[i] == 1){
@@ -159,7 +163,8 @@ int eight2 = 16;
 int nine1 = 2;
 int nine2 = 16;
 
-
+    //String a = String(13, BIN); // convert string to binary
+    
     // output
     /*
     for (int g = 0; g < a.length(); g++){
@@ -178,10 +183,17 @@ int nine2 = 16;
         digitalWrite(S_CLK, LOW);
     }
 }
-    */
+*/
 
 
 /* NOTES:
 vaata üle `toInt()`
-
+> case statements? -> goto statement? (to instructions, after goes to the start of the loop)
+```switch (phase) {
+   case 0: Lo(); break;
+   case 1: Mid(); break;
+   case 2: Hi(); break;
+   default: Message("Invalid state!");
+}```
+> push data: 2nd segment(down) + 1st segment(down) + 3rd segment (down) + 4th segment(down) + 1st segment(up) + 2nd segment(up) + 3rd segment(up) + 4th segment(up)
 */
