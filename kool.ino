@@ -46,6 +46,12 @@ void dataToClock(array val1){
     }
 }
 
+void print2digits(int number) {
+  if (number >= 0 && number < 10) {
+    Serial.write('0');
+  }
+  Serial.print(number);
+}
 
 void setup(){
     pinMode(S_CLK, OUTPUT);
@@ -69,41 +75,15 @@ void setup(){
         dataToClock(null2[]);
     }
 }  
-    /*
-    digitalWrite(S_DATA, LOW);
-    digitalWrite(S_LATCH, HIGH);
-    digitalWrite(S_LATCH, LOW);
-    digitalWrite(S_CLK, HIGH);
-    digitalWrite(S_CLK, LOW);
-    // output
-    /*
-    for (int g = 0; g < a.length(); g++){
-        //Serial.println(a.substring(g, g + 1));
-        String b = a.substring(g, g + 1);
-        delay(300);
-        digitalWrite(S_DATA, LOW);
-        if (b == '1'){
-            digitalWrite(S_DATA, HIGH);
-        } else {
-            digitalWrite(S_DATA, LOW);
-        }
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-    }
-}
-    */
+
 
 
 void loop(){
-    delay(1000);
-}
-/*
+
     tmElements_t tm;
 
     if (RTC.read(tm)) {
-        Serial.print("Ok, Time = ");
+        Serial.print("Time = ");
         print2digits(tm.Hour);
         Serial.write(':');
         print2digits(tm.Minute);
@@ -118,11 +98,13 @@ void loop(){
         Serial.println();
     } else {
         if (RTC.chipPresent()) {
-            Serial.println("The DS1307 is stopped.  Please run the SetTime");
-            Serial.println("example to initialize the time and begin running.");
-            Serial.println();
+            Serial.println('================================================')
+            Serial.println("The DS1307 is stopped.");
+            Serial.println('================================================')
         } else {
+            Serial.println('================================================')
             Serial.println("DS1307 read error!  Please check the circuitry.");
+            Serial.println('================================================')
             Serial.println();
         }
         delay(9000);
@@ -130,42 +112,11 @@ void loop(){
     delay(1000);
 }
 /*
-    for (int i = 0; i < sizeof(one1); i++){
-        //Serial.print(one1[i]); //check if for loop works
-        if (one1[i] == 1){
-            digitalWrite(S_DATA, HIGH);
-            //Serial.print('works'); //check if statement works
-        } else {
-            digitalWrite(S_DATA, LOW);
+    if (RTC.read(tm)){
+
+        if (tm.Hour == 1){
+            dataToClock(one1);
         }
-        Serial.println();
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        delay(300);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-    }
-    
-
-}
-    /*
-    // crates a nice small loop
-
-    for (int i = 0; i < 32; i++){
-        digitalWrite(S_DATA, HIGH);
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-        delay(400);
-    }
-    for (int l = 0; l < 32; l++){
-        digitalWrite(S_DATA, LOW);
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-        delay(400);
     }
 }
 /*
@@ -206,6 +157,27 @@ int eight1 = 14;
 int eight2 = 16;
 int nine1 = 2;
 int nine2 = 16;
+
+
+    // output
+    /*
+    for (int g = 0; g < a.length(); g++){
+        //Serial.println(a.substring(g, g + 1));
+        String b = a.substring(g, g + 1);
+        delay(300);
+        digitalWrite(S_DATA, LOW);
+        if (b == '1'){
+            digitalWrite(S_DATA, HIGH);
+        } else {
+            digitalWrite(S_DATA, LOW);
+        }
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+    }
+}
+    */
 
 
 /* NOTES:
