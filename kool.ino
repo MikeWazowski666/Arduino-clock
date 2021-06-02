@@ -9,25 +9,25 @@
 #define SCL A5
 
 byte one1[]   = {0, 0, 1, 0}; 
-byte one2[]   = {0, 0, 0, 1}; 
-byte two1[]   = {0, 1, 1, 0}; 
-byte two2[]   = {0, 0, 1, 1}; 
+byte one2[]   = {1, 0, 0, 0}; 
+byte two1[]   = {1, 1, 0, 0};
+byte two2[]   = {1, 1, 0, 1};
 byte three1[] = {0, 1, 1, 0}; 
-byte three2[] = {1, 0, 1, 1}; 
-byte four1[]  = {0, 1, 0, 0}; 
-byte four2[]  = {1, 1, 0, 1}; 
+byte three2[] = {1, 1, 0, 1}; 
+byte four1[]  = {0, 0, 1, 0}; 
+byte four2[]  = {1, 0, 1, 1}; 
 byte five1[]  = {0, 1, 1, 0}; 
-byte five2[]  = {1, 1, 1, 0}; 
-byte six1[]   = {0, 1, 1, 1}; 
-byte six2[]   = {1, 1, 1, 0}; 
-byte seven1[] = {0, 1, 0, 0}; 
-byte seven2[] = {0, 0, 1, 1}; 
-byte eight1[] = {0, 1, 1, 1}; 
+byte five2[]  = {0, 1, 1, 1}; 
+byte six1[]   = {1, 1, 1, 0}; 
+byte six2[]   = {0, 1, 1, 1}; 
+byte seven1[] = {0, 0, 1, 0}; 
+byte seven2[] = {1, 1, 0, 0}; 
+byte eight1[] = {1, 1, 1, 0}; 
 byte eight2[] = {1, 1, 1, 1}; 
-byte nine1[]  = {0, 1, 0, 0}; 
-byte nine2[]  = {1, 1, 1, 1};
+byte nine1[]  = {0, 1, 1, 0}; 
+byte nine2[]  = {1, 1, 1, 1}; 
 byte null1[]  = {1, 1, 1, 0};
-byte null2[]  = {0, 1, 1, 1};
+byte null2[]  = {1, 1, 1, 1};
 
 /*
 void dataToClock(array val1){
@@ -45,6 +45,7 @@ void dataToClock(array val1){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
+    return;
 }
 
 void toDigits(int number) {
@@ -59,6 +60,7 @@ void toDigits(int number) {
 void tempFunc(int var1){
     if (var1 == 1){
         digitalWrite(S_DATA, HIGH);
+        //Serial.println(var1);
     } else {
         digitalWrite(S_DATA, LOW);
     }
@@ -66,15 +68,14 @@ void tempFunc(int var1){
     digitalWrite(S_LATCH, LOW);
     digitalWrite(S_CLK, HIGH);
     digitalWrite(S_CLK, LOW);
-    return 0;
+    return;
 }
 
 void print2digits(int number) {
   if (number >= 0 && number < 10) {
     Serial.write('0');
   }
-  Serial.print(number);
-  return 0;
+  return;
 }
 
 void setup(){
@@ -84,7 +85,7 @@ void setup(){
     Serial.begin(9600);
 
     // clearing all registers
-    for (int i = 0; i < 33; i++){
+    for (int i = 0; i < 36; i++){
         digitalWrite(S_DATA, LOW);
         digitalWrite(S_LATCH, HIGH);
         digitalWrite(S_LATCH, LOW);
@@ -94,20 +95,55 @@ void setup(){
 
     // only for demo usage
     for (int i = 0; i < 4; i++){
-    //dataToClock(null1[]);
     
-        for (int a = 0; a < sizeof(null1); a++){
-            tempFunc(null1[a]);
-        }
-
-        for (int j = 0; j < sizeof(null2); j++){
-            tempFunc(null2[j]);
+       for (int a = 0; a < sizeof(one1); a++){
+            tempFunc(eight2[a]);
         }
     }
+    for (int i = 0; i < 4; i++){
+    
+       for (int a = 0; a < sizeof(one1); a++){
+            tempFunc(eight1[a]);
+        }
+    }
+    //tempFunc(0);
+    tempFunc(0);
+    //for (int i = 0; i < 4; i++){
+      //  for (int j = 0; j < sizeof(null2); j++){
+        //    tempFunc(null2[j]);
+          //  Serial.println(null2[j]);
+        //}
+    //}
+    
+    
+   // for (int i = 0; i < 16; i++){
+     // tempFunc(0);
+    //}
+
+    delay(1000);
 }  
 
 
 void loop(){
+/*
+    for (int i = 0; i < 32; i++){
+        digitalWrite(S_DATA, HIGH);
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+        delay(400);
+    }
+    for (int i = 0; i < 32; i++){
+        digitalWrite(S_DATA, LOW);
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+        delay(400);
+    }
+}
+*/
 
     tmElements_t tm;
 
@@ -127,14 +163,14 @@ void loop(){
         Serial.println();
     } else {
         if (RTC.chipPresent()) {
-            Serial.println('================================================');
-            Serial.println("The DS1307 is stopped.");
-            Serial.println('================================================');
+            Serial.println('======================================================');
+            Serial.println("                  The DS1307 has stopped.              ");
+            Serial.println('======================================================');
             Serial.println();
         } else {
-            Serial.println('================================================');
-            Serial.println("DS1307 read error!  Please check the circuitry.");
-            Serial.println('================================================');
+            Serial.println('======================================================');
+            Serial.println("    DS1307 read error!  Please check the circuitry.   ");
+            Serial.println('======================================================');
             Serial.println();
         }
         delay(9000);
@@ -215,5 +251,5 @@ vaata üle `toInt()`
    case 2: Hi(); break;
    default: Message("Invalid state!");
 }```
-> push data: 2nd segment(down) + 1st segment(down) + 3rd segment (down) + 4th segment(down) + 1st segment(up) + 2nd segment(up) + 3rd segment(up) + 4th segment(up)
+> push data: 2nd segment(down) + 1st segment(down) + 4th segment (down) + 3rd segment(down) + 2nd segment(up) + 1st segment(up) + 4th segment(up) + 3rd segment(up)
 */
