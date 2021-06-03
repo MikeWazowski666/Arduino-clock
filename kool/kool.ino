@@ -7,14 +7,14 @@
 #define S_DATA 10
 #define SDA A4
 #define SCL A5
+#define LEN 8
+
 
 /*
-void dataToClock(array val1){
+void dataToClock(int val1){
     for (int i = 0; i < sizeof(val1); i++){
-        //Serial.print(one1[i]); //use for debugging
-        if (one1[i] == 1){
+        if (val1[i] == 1){
             digitalWrite(S_DATA, HIGH);
-            //Serial.print('works'); //use for debugging
         } else {
             digitalWrite(S_DATA, LOW);
         }
@@ -24,21 +24,9 @@ void dataToClock(array val1){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
-    return 0;
+    return;
 }
 */
-byte concat(byte a, byte b){
-    String s1 = String(a);
-    String s2 = String(b);
-    Serial.println("s1 = " + s1);
-    Serial.println("s2 = " + s2);
-    String s3 = s1 + s2;
-    Serial.println("s3 = " + s3);
-    byte c = s3.toInt();
-    return c;
-}
-
-
 void tempFunc(int var1){
     if (var1 == 1){
         digitalWrite(S_DATA, HIGH);
@@ -52,6 +40,138 @@ void tempFunc(int var1){
     return;
 }
 
+int concat(int a, int b){
+    String s1 = String(a);
+    String s2 = String(b);
+    Serial.println("s1 = " + s1);
+    Serial.println("s2 = " + s2);
+    String s3 = s1 + s2;
+    Serial.println("s3 = " + s3);
+    int c = s3.toInt();
+    return c;
+}
+
+
+
+byte toBytes(int var1, int *array){
+    
+    String a = String(var1);
+
+    for (int t = 0; t < (a.length()); t++){
+        
+        switch (a.substring(t, t + 1).toInt()){
+            case 1:
+            array[0] = 0;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 0;
+            array[6] = 0;
+            array[7] = 0;
+            break;
+            
+            case 2:
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 0;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 1;
+            break;
+
+            case 3:
+            array[0] = 0;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 1;
+            break;
+
+            case 4:
+            array[0] = 0;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 0;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 5:
+            array[0] = 0;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 0;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 6:
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 0;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 7:
+            array[0] = 0;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 0;
+            break;
+
+            case 8:
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 9:
+            array[0] = 0;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 0: 
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 0;
+            break;
+        }
+    }
+}
 
 byte one[]   = {0, 0, 1, 0, 1, 0, 0, 0};
 byte two[]   = {1, 1, 0, 0, 1, 1, 0, 1};
@@ -64,61 +184,29 @@ byte eight[] = {1, 1, 1, 0, 1, 1, 1, 1};
 byte nine[]  = {0, 1, 1, 0, 1, 1, 1, 1}; 
 byte null[]  = {1, 1, 1, 0, 1, 1, 1, 1};
 
-byte toBytes(int var1){
-    String a = String(var1);
-//    Serial.println(var1);
-//    Serial.println(a.length());
-//    Serial.println(sizeof(a));
-    for (int t = 0; t < (a.length()); t++){
-//        Serial.println(a.substring(t, t + 1)); 
-        switch (a.substring(t, t + 1).toInt()){
-            case 1:
-            byte extVal = {0, 0, 1, 0, 1, 0, 0, 0};
-            break;
-            
-            case 2:
-            byte extVal = {1, 1, 0, 0, 1, 1, 0, 1};
-            break;
 
-            case 3:
-            byte extVal = {0, 1, 1, 0, 1, 1, 0, 1};
-            break;
 
-            case 4:
-            byte extVal = {0, 0, 1, 0, 1, 0, 1, 1}; 
-            break;
+void pushData( int var_hourTen, int var_hour, int var_minTen, int var_min ){
+    
+    int hourTen[8];
+    int hour[8];
+    int minTen[8];
+    int min[8];
+    char buffer[42];
 
-            case 5:
-            byte extVal = {0, 1, 1, 0, 0, 1, 1, 1};
-            break;
-
-            case 6:
-            byte extVal = {1, 1, 1, 0, 0, 1, 1, 1}; 
-            break;
-
-            case 7:
-            byte extVal = {0, 0, 1, 0, 1, 1, 0, 0};
-            break;
-
-            case 8:
-            byte extVal = {1, 1, 1, 0, 1, 1, 1, 1}; 
-            break;
-
-            case 9:
-            byte extVal = {0, 1, 1, 0, 1, 1, 1, 1}; 
-            break;
-
-            case 0: 
-            byte extVal = {1, 1, 1, 0, 1, 1, 1, 0};
-            break;
-        }
+    for (int i = 0; i < sizeof(hour); i++){
+        Serial.println((toBytes(var_hour, int*(hour[i]))));
     }
-    return extVal;
-}
+    //Serial.println(String(toBytes(var_hourTen, hourTen)));
+    //Serial.println(String(toBytes(var_min, min)));
+    //Serial.println(String(toBytes(var_minTen, minTen)));
 
-void pushData(int hourTen[], int hour[], int minTen[], int min[]){
-    int data[];
-    data = {hour[0], hour[1], hour[2], hour[3], hourTen[0], hourTen[1], hourTen[2], hourTen[3], min[0], min[1], min[2], min[3], minTen[0], minTen[1], minTen[2], minTen[3], minTen[4], minTen[5], minTen[6], minTen[7], min[4], min[5], min[6], min[7], hourTen[4], hourTen[5], hourTen[6], hourTen[7], hour[4], hour[5], hour[6], hour[7]};
+
+    //{hour[0], hour[1], hour[2], hour[3], hourTen[0], hourTen[1], hourTen[2], hourTen[3], min[0], min[1], min[2], min[3], minTen[0], minTen[1], minTen[2], minTen[3], minTen[4], minTen[5], minTen[6], minTen[7], min[4], min[5], min[6], min[7], hourTen[4], hourTen[5], hourTen[6], hourTen[7], hour[4], hour[5], hour[6], hour[7]};
+    //String data = String(hour[0]), String(hour[1]), String(hour[2]), String(hour[3]), String(hourTen[0]), String(hourTen[1]), String(hourTen[2]), String(hourTen[3]), String(hour[0]), String(hour[1]), String(hour[2]), String(hour[3]), String(hourTen[0]), String(hourTen[1]), String(hourTen[2]), String(hourTen[3]), String(hourTen[4]), String(hourTen[5]), String(hourTen[6]), String(hourTen[7]), String(hour[4]), String(hour[5]), String(hour[6]), String(hour[7]), String(hourTen[4]), String(hourTen[5]), String(hourTen[6]), String(hourTen[7]), String(hour[4]), String(hour[5]), String(hour[6]), String(hour[7]);
+    //  creates the instructions for 7 segment displays
+    //Serial.println(data);
+    //dataToClock();
 }
 
 void setup(){
@@ -138,31 +226,12 @@ void setup(){
 
     // only for demo usage
     for (int i = 0; i < 4; i++){
-    
-       /*
-        for (int a = 0; a < sizeof(one1); a++){
-            tempFunc(two2[a]);
-        }
-    }
-    for (int i = 0; i < 4; i++){
-    
-       for (int a = 0; a < sizeof(one1); a++){
-            tempFunc(two1[a]);
-        }
-        */
-        for (int a = 0; a < sizeof(nine); a++){
+        for (int a = 0; a < 8; a++){
             tempFunc(nine[a]);
         }
     }
-
-    Serial.println("------------");
-   // Serial.print(toBytes(10));
-    Serial.print(toBytes(10));
-   // Serial.println(concat(0x10, 0x01));
-
     tempFunc(0);
-    delay(1000);
-    Serial.println("endl");
+    pushData(1, 4, 3, 5);
 }  
 
 
@@ -267,14 +336,13 @@ void aa(int a){
 */
 
 void get_time(){
-
     tmElements_t tm;
     if (RTC.read(tm)) {
         //print2digits(tm.Hour);
         Serial.print(tm.Hour);
         Serial.write('(');
-        toBytes(tm.Hour);
-        Serial.print(toBytes(tm.Hour));
+        //toBytes(tm.Hour);
+        //Serial.print(toBytes(tm.Hour));
         Serial.write(')');
         Serial.write(':');
         //print2digits(tm.Minute);
@@ -283,10 +351,11 @@ void get_time(){
         //print2digits(tm.Second);
         Serial.print(tm.Second);
         Serial.write('(');
-        toBytes(tm.Second);
-        Serial.print(toBytes(tm.Second));
+        //toBytes(tm.Second);
+        //Serial.print(toBytes(tm.Second));
         Serial.write(')');
         Serial.println();
+    }
 }
 
 /* NOTES:
@@ -299,11 +368,5 @@ void get_time(){
 5. push data
 
 > case statements? -> goto statement? (to instructions, after goes to the start of the loop)
-```switch (phase) {
-   case 0: Lo(); break;
-   case 1: Mid(); break;
-   case 2: Hi(); break;
-   default: Message("Invalid state!");
-}```
 > push data: 2nd segment(down) + 1st segment(down) + 4th segment (down) + 3rd segment(down) + 2nd segment(up) + 1st segment(up) + 4th segment(up) + 3rd segment(up)
 */
