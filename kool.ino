@@ -28,6 +28,8 @@ byte nine1[]  = {0, 1, 1, 0};
 byte nine2[]  = {1, 1, 1, 1}; 
 byte null1[]  = {1, 1, 1, 0};
 byte null2[]  = {1, 1, 1, 1};
+byte one[]    = {0, 0, 1, 0, 1, 0, 0, 0};
+byte nine[]  = {0, 1, 1, 0, 1, 1, 1, 1};
 
 /*
 void dataToClock(array val1){
@@ -45,22 +47,23 @@ void dataToClock(array val1){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
-    return;
+    return 0;
 }
+*/
 
-void toDigits(int number) {
+int toDigits(int number) {
   if (number >= 0 && number < 10) {
-    int a = 0 + number;
-    return a;
+    String a = '0' + String(number);
+    int b = a.toInt();
+    return b;
   }
   return number;
 }
-*/
+
 
 void tempFunc(int var1){
     if (var1 == 1){
         digitalWrite(S_DATA, HIGH);
-        //Serial.println(var1);
     } else {
         digitalWrite(S_DATA, LOW);
     }
@@ -71,11 +74,55 @@ void tempFunc(int var1){
     return;
 }
 
+void toBytes(int var1){
+    switch (var1){
+        case 1:
+        return (0x28);
+        break;
+        
+        case 2:
+        return (0xcd);
+        break;
+
+        case 3:
+        return (0x6d);
+        break;
+
+        case 4:
+        return (0x2b);
+        break;
+
+        case 5:
+        return (0x67);
+        break;
+
+        case 6:
+        return (0xe7);
+        break;
+
+        case 7:
+        return (0x2c);
+        break;
+
+        case 8:
+        return (0xef);
+        break;
+
+        case 9:
+        return (0x6e);
+        break;
+
+        default:
+        return (0xee);
+        break;
+    }
+}
+
 void print2digits(int number) {
-  if (number >= 0 && number < 10) {
-    Serial.write('0');
-  }
-  return;
+    if (number >= 0 && number < 10) {
+        Serial.write('0');
+    }
+    Serial.print(number);
 }
 
 void setup(){
@@ -96,75 +143,45 @@ void setup(){
     // only for demo usage
     for (int i = 0; i < 4; i++){
     
-       for (int a = 0; a < sizeof(one1); a++){
-            tempFunc(eight2[a]);
+       /*
+        for (int a = 0; a < sizeof(one1); a++){
+            tempFunc(two2[a]);
         }
     }
     for (int i = 0; i < 4; i++){
     
        for (int a = 0; a < sizeof(one1); a++){
-            tempFunc(eight1[a]);
+            tempFunc(two1[a]);
+        }
+        */
+        for (int a = 0; a < sizeof(nine); a++){
+            tempFunc(nine);
         }
     }
-    //tempFunc(0);
     tempFunc(0);
-    //for (int i = 0; i < 4; i++){
-      //  for (int j = 0; j < sizeof(null2); j++){
-        //    tempFunc(null2[j]);
-          //  Serial.println(null2[j]);
-        //}
-    //}
-    
-    
-   // for (int i = 0; i < 16; i++){
-     // tempFunc(0);
-    //}
 
     delay(1000);
 }  
 
 
 void loop(){
-/*
-    for (int i = 0; i < 32; i++){
-        digitalWrite(S_DATA, HIGH);
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-        delay(400);
-    }
-    for (int i = 0; i < 32; i++){
-        digitalWrite(S_DATA, LOW);
-        digitalWrite(S_LATCH, HIGH);
-        digitalWrite(S_LATCH, LOW);
-        digitalWrite(S_CLK, HIGH);
-        digitalWrite(S_CLK, LOW);
-        delay(400);
-    }
-}
-*/
 
     tmElements_t tm;
 
     if (RTC.read(tm)) {
-        Serial.print("Time = ");
-        print2digits(tm.Hour);
+        //print2digits(tm.Hour);
+        Serial.print(toDigits(tm.Hour));
         Serial.write(':');
-        print2digits(tm.Minute);
+        //print2digits(tm.Minute);
+        Serial.print(toDigits(tm.Minute));
         Serial.write(':');
-        print2digits(tm.Second);
-        Serial.print(", Date (D/M/Y) = ");
-        Serial.print(tm.Day);
-        Serial.write('/');
-        Serial.print(tm.Month);
-        Serial.write('/');
-        Serial.print(tmYearToCalendar(tm.Year));
+        //print2digits(tm.Second);
+        Serial.print(toDigits(tm.Second));
         Serial.println();
     } else {
         if (RTC.chipPresent()) {
             Serial.println('======================================================');
-            Serial.println("                  The DS1307 has stopped.              ");
+            Serial.println("                  The DS1307 is stopped.              ");
             Serial.println('======================================================');
             Serial.println();
         } else {
@@ -173,7 +190,7 @@ void loop(){
             Serial.println('======================================================');
             Serial.println();
         }
-        delay(9000);
+        delay(1000);
     }
     delay(1000);
 }
@@ -218,6 +235,25 @@ int eight1 = 14;
 int eight2 = 16;
 int nine1 = 2;
 int nine2 = 16;
+
+/*
+    for (int i = 0; i < 32; i++){
+        digitalWrite(S_DATA, HIGH);
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+        delay(400);
+    }
+    for (int i = 0; i < 32; i++){
+        digitalWrite(S_DATA, LOW);
+        digitalWrite(S_LATCH, HIGH);
+        digitalWrite(S_LATCH, LOW);
+        digitalWrite(S_CLK, HIGH);
+        digitalWrite(S_CLK, LOW);
+        delay(400);
+    }
+}
 
     //String a = String(13, BIN); // convert string to binary
     
