@@ -8,29 +8,6 @@
 #define SDA A4
 #define SCL A5
 
-byte one1[]   = {0, 0, 1, 0}; 
-byte one2[]   = {1, 0, 0, 0}; 
-byte two1[]   = {1, 1, 0, 0};
-byte two2[]   = {1, 1, 0, 1};
-byte three1[] = {0, 1, 1, 0}; 
-byte three2[] = {1, 1, 0, 1}; 
-byte four1[]  = {0, 0, 1, 0}; 
-byte four2[]  = {1, 0, 1, 1}; 
-byte five1[]  = {0, 1, 1, 0}; 
-byte five2[]  = {0, 1, 1, 1}; 
-byte six1[]   = {1, 1, 1, 0}; 
-byte six2[]   = {0, 1, 1, 1}; 
-byte seven1[] = {0, 0, 1, 0}; 
-byte seven2[] = {1, 1, 0, 0}; 
-byte eight1[] = {1, 1, 1, 0}; 
-byte eight2[] = {1, 1, 1, 1}; 
-byte nine1[]  = {0, 1, 1, 0}; 
-byte nine2[]  = {1, 1, 1, 1}; 
-byte null1[]  = {1, 1, 1, 0};
-byte null2[]  = {1, 1, 1, 1};
-byte one[]    = {0, 0, 1, 0, 1, 0, 0, 0};
-byte nine[]  = {0, 1, 1, 0, 1, 1, 1, 1};
-
 /*
 void dataToClock(array val1){
     for (int i = 0; i < sizeof(val1); i++){
@@ -50,14 +27,15 @@ void dataToClock(array val1){
     return 0;
 }
 */
-
-int toDigits(int number) {
-  if (number >= 0 && number < 10) {
-    String a = '0' + String(number);
-    int b = a.toInt();
-    return b;
-  }
-  return number;
+byte concat(byte a, byte b){
+    String s1 = String(a);
+    String s2 = String(b);
+    Serial.println("s1 = " + s1);
+    Serial.println("s2 = " + s2);
+    String s3 = s1 + s2;
+    Serial.println("s3 = " + s3);
+    byte c = s3.toInt();
+    return c;
 }
 
 
@@ -74,62 +52,80 @@ void tempFunc(int var1){
     return;
 }
 
-void toBytes(int var1){
-    switch (var1){
-        case 1:
-        return (0x28);
-        break;
-        
-        case 2:
-        return (0xcd);
-        break;
 
-        case 3:
-        return (0x6d);
-        break;
+byte one[]   = {0, 0, 1, 0, 1, 0, 0, 0};
+byte two[]   = {1, 1, 0, 0, 1, 1, 0, 1};
+byte three[] = {0, 1, 1, 0, 1, 1, 0, 1}; 
+byte four[]  = {0, 0, 1, 0, 1, 0, 1, 1}; 
+byte five[]  = {0, 1, 1, 0, 0, 1, 1, 1}; 
+byte six[]   = {1, 1, 1, 0, 0, 1, 1, 1}; 
+byte seven[] = {0, 0, 1, 0, 1, 1, 0, 0}; 
+byte eight[] = {1, 1, 1, 0, 1, 1, 1, 1}; 
+byte nine[]  = {0, 1, 1, 0, 1, 1, 1, 1}; 
+byte null[]  = {1, 1, 1, 0, 1, 1, 1, 1};
 
-        case 4:
-        return (0x2b);
-        break;
+byte toBytes(int var1){
+    String a = String(var1);
+//    Serial.println(var1);
+//    Serial.println(a.length());
+//    Serial.println(sizeof(a));
+    for (int t = 0; t < (a.length()); t++){
+//        Serial.println(a.substring(t, t + 1)); 
+        switch (a.substring(t, t + 1).toInt()){
+            case 1:
+            byte extVal = {0, 0, 1, 0, 1, 0, 0, 0};
+            break;
+            
+            case 2:
+            byte extVal = {1, 1, 0, 0, 1, 1, 0, 1};
+            break;
 
-        case 5:
-        return (0x67);
-        break;
+            case 3:
+            byte extVal = {0, 1, 1, 0, 1, 1, 0, 1};
+            break;
 
-        case 6:
-        return (0xe7);
-        break;
+            case 4:
+            byte extVal = {0, 0, 1, 0, 1, 0, 1, 1}; 
+            break;
 
-        case 7:
-        return (0x2c);
-        break;
+            case 5:
+            byte extVal = {0, 1, 1, 0, 0, 1, 1, 1};
+            break;
 
-        case 8:
-        return (0xef);
-        break;
+            case 6:
+            byte extVal = {1, 1, 1, 0, 0, 1, 1, 1}; 
+            break;
 
-        case 9:
-        return (0x6e);
-        break;
+            case 7:
+            byte extVal = {0, 0, 1, 0, 1, 1, 0, 0};
+            break;
 
-        default:
-        return (0xee);
-        break;
+            case 8:
+            byte extVal = {1, 1, 1, 0, 1, 1, 1, 1}; 
+            break;
+
+            case 9:
+            byte extVal = {0, 1, 1, 0, 1, 1, 1, 1}; 
+            break;
+
+            case 0: 
+            byte extVal = {1, 1, 1, 0, 1, 1, 1, 0};
+            break;
+        }
     }
+    return extVal;
 }
 
-void print2digits(int number) {
-    if (number >= 0 && number < 10) {
-        Serial.write('0');
-    }
-    Serial.print(number);
+void pushData(int hourTen[], int hour[], int minTen[], int min[]){
+    int data[];
+    data = {hour[0], hour[1], hour[2], hour[3], hourTen[0], hourTen[1], hourTen[2], hourTen[3], min[0], min[1], min[2], min[3], minTen[0], minTen[1], minTen[2], minTen[3], minTen[4], minTen[5], minTen[6], minTen[7], min[4], min[5], min[6], min[7], hourTen[4], hourTen[5], hourTen[6], hourTen[7], hour[4], hour[5], hour[6], hour[7]};
 }
 
 void setup(){
     pinMode(S_CLK, OUTPUT);
     pinMode(S_LATCH, OUTPUT);
     pinMode(S_DATA, OUTPUT);
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     // clearing all registers
     for (int i = 0; i < 36; i++){
@@ -155,28 +151,42 @@ void setup(){
         }
         */
         for (int a = 0; a < sizeof(nine); a++){
-            tempFunc(nine);
+            tempFunc(nine[a]);
         }
     }
-    tempFunc(0);
 
+    Serial.println("------------");
+   // Serial.print(toBytes(10));
+    Serial.print(toBytes(10));
+   // Serial.println(concat(0x10, 0x01));
+
+    tempFunc(0);
     delay(1000);
+    Serial.println("endl");
 }  
 
 
-void loop(){
-
+void loop(){}
+/*
     tmElements_t tm;
 
     if (RTC.read(tm)) {
         //print2digits(tm.Hour);
-        Serial.print(toDigits(tm.Hour));
+        Serial.print(tm.Hour);
+        Serial.write('(');
+        toBytes(tm.Hour);
+        Serial.print(toBytes(tm.Hour));
+        Serial.write(')');
         Serial.write(':');
         //print2digits(tm.Minute);
-        Serial.print(toDigits(tm.Minute));
+        Serial.print(tm.Minute);
         Serial.write(':');
         //print2digits(tm.Second);
-        Serial.print(toDigits(tm.Second));
+        Serial.print(tm.Second);
+        Serial.write('(');
+        toBytes(tm.Second);
+        Serial.print(toBytes(tm.Second));
+        Serial.write(')');
         Serial.println();
     } else {
         if (RTC.chipPresent()) {
@@ -217,25 +227,6 @@ void aa(int a){
     }
 }
 
-int one1 = 2;
-int one2 = 8;
-int two1 = 6;
-int two2 = 12;
-int three1 = 6;
-int three2 = 13;
-int four1 = 2;
-int four2 = 11;
-int five1 = 6;
-int five2 = 7;
-int six1 = 14;
-int six2 = 7;
-int seven1 = 2;
-int seven2 = 12;
-int eight1 = 14;
-int eight2 = 16;
-int nine1 = 2;
-int nine2 = 16;
-
 /*
     for (int i = 0; i < 32; i++){
         digitalWrite(S_DATA, HIGH);
@@ -255,9 +246,7 @@ int nine2 = 16;
     }
 }
 
-    //String a = String(13, BIN); // convert string to binary
-    
-    // output
+   // output
     /*
     for (int g = 0; g < a.length(); g++){
         //Serial.println(a.substring(g, g + 1));
@@ -277,9 +266,38 @@ int nine2 = 16;
 }
 */
 
+void get_time(){
+
+    tmElements_t tm;
+    if (RTC.read(tm)) {
+        //print2digits(tm.Hour);
+        Serial.print(tm.Hour);
+        Serial.write('(');
+        toBytes(tm.Hour);
+        Serial.print(toBytes(tm.Hour));
+        Serial.write(')');
+        Serial.write(':');
+        //print2digits(tm.Minute);
+        Serial.print(tm.Minute);
+        Serial.write(':');
+        //print2digits(tm.Second);
+        Serial.print(tm.Second);
+        Serial.write('(');
+        toBytes(tm.Second);
+        Serial.print(toBytes(tm.Second));
+        Serial.write(')');
+        Serial.println();
+}
 
 /* NOTES:
-vaata üle `toInt()`
+
+1. get time
+2. time to byte array (7-segment code)
+3. byte array to byte
+4. sorting for output
+` output = {array1[0], array[1],...}`
+5. push data
+
 > case statements? -> goto statement? (to instructions, after goes to the start of the loop)
 ```switch (phase) {
    case 0: Lo(); break;
