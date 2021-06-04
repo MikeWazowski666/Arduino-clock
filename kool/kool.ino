@@ -10,23 +10,23 @@
 #define LEN 8
 
 
-/*
-void dataToClock(int val1){
-    for (int i = 0; i < sizeof(val1); i++){
-        if (val1[i] == 1){
+
+void dataToClock(String val1){
+    for (int i = 0; i < (int) val1.length(); i++){
+        String charecter = val1.substring(i, i + 1);
+        if (charecter == "1"){
             digitalWrite(S_DATA, HIGH);
         } else {
             digitalWrite(S_DATA, LOW);
         }
         digitalWrite(S_LATCH, HIGH);
         digitalWrite(S_LATCH, LOW);
-        delay(300);
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
     return;
 }
-*/
+
 void tempFunc(int var1){
     if (var1 == 1){
         digitalWrite(S_DATA, HIGH);
@@ -52,125 +52,94 @@ int concat(int a, int b){
 }
 
 
+String substituteTo7Seg(String a, bool clockDown){
+    for (int t = 0; t < (a.length()); t++){  
+        if (clockDown == true){  
+            switch (a.substring(t, t + 1).toInt()){
+                case 1:
+                return "0010";
+                break;
+                
+                case 2:
+                return "1100";
+                break;
 
-byte toBytes(int var1, int *array){
-    
-    String a = String(var1);
+                case 3:
+                return "0110";
+                break;
 
-    for (int t = 0; t < (a.length()); t++){
-        
-        switch (a.substring(t, t + 1).toInt()){
-            case 1:
-            array[0] = 0;
-            array[1] = 0;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 0;
-            array[6] = 0;
-            array[7] = 0;
-            break;
-            
-            case 2:
-            array[0] = 1;
-            array[1] = 1;
-            array[2] = 0;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 1;
-            array[6] = 0;
-            array[7] = 1;
-            break;
+                case 4:
+                return "0010";
+                break;
 
-            case 3:
-            array[0] = 0;
-            array[1] = 1;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 1;
-            array[6] = 0;
-            array[7] = 1;
-            break;
+                case 5:
+                return "0110";
+                break;
 
-            case 4:
-            array[0] = 0;
-            array[1] = 0;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 0;
-            array[6] = 1;
-            array[7] = 1;
-            break;
+                case 6:
+                return "1110"; 
+                break;
 
-            case 5:
-            array[0] = 0;
-            array[1] = 1;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 0;
-            array[5] = 1;
-            array[6] = 1;
-            array[7] = 1;
-            break;
+                case 7:
+                return "0010";
+                break;
 
-            case 6:
-            array[0] = 1;
-            array[1] = 1;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 0;
-            array[5] = 1;
-            array[6] = 1;
-            array[7] = 1;
-            break;
+                case 8:
+                return "1110"; 
+                break;
 
-            case 7:
-            array[0] = 0;
-            array[1] = 0;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 1;
-            array[6] = 0;
-            array[7] = 0;
-            break;
+                case 9:
+                return "0110";
+                break;
 
-            case 8:
-            array[0] = 1;
-            array[1] = 1;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 1;
-            array[6] = 1;
-            array[7] = 1;
-            break;
+                case 0: 
+                return "1110";
+                break;
+            }
+        } else {
+            switch (a.substring(t, t + 1).toInt()){
+                case 1:
+                return "1000";
+                break;
+                
+                case 2:
+                return "1101";
+                break;
 
-            case 9:
-            array[0] = 0;
-            array[1] = 1;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 1;
-            array[6] = 1;
-            array[7] = 1;
-            break;
+                case 3:
+                return "1101";
+                break;
 
-            case 0: 
-            array[0] = 1;
-            array[1] = 1;
-            array[2] = 1;
-            array[3] = 0;
-            array[4] = 1;
-            array[5] = 1;
-            array[6] = 1;
-            array[7] = 0;
-            break;
+                case 4:
+                return "1011";
+                break;
+
+                case 5:
+                return "0111";
+                break;
+
+                case 6:
+                return "0111"; 
+                break;
+
+                case 7:
+                return "1100";
+                break;
+
+                case 8:
+                return "1111"; 
+                break;
+
+                case 9:
+                return "1111";
+                break;
+
+                case 0: 
+                return "1110";
+                break;
+            }
         }
-    }
+    }  
 }
 
 byte one[]   = {0, 0, 1, 0, 1, 0, 0, 0};
@@ -182,26 +151,166 @@ byte six[]   = {1, 1, 1, 0, 0, 1, 1, 1};
 byte seven[] = {0, 0, 1, 0, 1, 1, 0, 0}; 
 byte eight[] = {1, 1, 1, 0, 1, 1, 1, 1}; 
 byte nine[]  = {0, 1, 1, 0, 1, 1, 1, 1}; 
-byte null[]  = {1, 1, 1, 0, 1, 1, 1, 1};
+byte null[]  = {1, 1, 1, 0, 1, 1, 1, 0};
 
 
 
-void pushData( int var_hourTen, int var_hour, int var_minTen, int var_min ){
+String createCode( int var_hourTen, int var_hour, int var_minTen, int var_min ){
+
+    String hourTenUp = substituteTo7Seg(String(var_hourTen), true);
+    String hourTenDown = substituteTo7Seg(String(var_hourTen), false);
+
+    String hourUp = substituteTo7Seg(String(var_hour), true);
+    String hourDown = substituteTo7Seg(String(var_hour), false);
     
-    int hourTen[8];
-    int hour[8];
-    int minTen[8];
-    int min[8];
-    char buffer[42];
-
-    for (int i = 0; i < sizeof(hour); i++){
-        Serial.println((toBytes(var_hour, int*(hour[i]))));
-    }
+    String minUp =  substituteTo7Seg(String(var_min), true);
+    String minDown =  substituteTo7Seg(String(var_min), false);
+    
+    String minTenUp = substituteTo7Seg(String(var_minTen), true);
+    String minTenDown = substituteTo7Seg(String(var_minTen), false);
+    
+    String code = hourDown + hourTenDown + minDown + minTenDown + minTenUp + minUp + hourTenUp + hourUp;
+    
+    return code;
     //Serial.println(String(toBytes(var_hourTen, hourTen)));
     //Serial.println(String(toBytes(var_min, min)));
     //Serial.println(String(toBytes(var_minTen, minTen)));
+    /*
+    for (int t = 0; t < (a.length()); t++){
+        
+        switch (a.substring(t, t + 1).toInt()){
+            case 1:
+            byte one[]   = {0, 0, 1, 0, 1, 0, 0, 0};
+            /*
+            array[0] = 0;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 0;
+            array[6] = 0;
+            array[7] = 0;
+            
+            break;
+            
+            case 2:
+            byte two[]   = {1, 1, 0, 0, 1, 1, 0, 1};
+            /*
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 0;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 1;
+            break;
 
+            case 3:
+            byte three[] = {0, 1, 1, 0, 1, 1, 0, 1}; 
+            /*
+            array[0] = 0;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 1;
+            break;
 
+            case 4:
+            byte four[]  = {0, 0, 1, 0, 1, 0, 1, 1}; 
+            /*
+            array[0] = 0;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 0;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 5:
+            byte five[]  = {0, 1, 1, 0, 0, 1, 1, 1}; 
+            /*
+            array[0] = 0;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 0;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 6:
+            byte six[]   = {1, 1, 1, 0, 0, 1, 1, 1}; 
+            /*
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 0;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 7:
+            byte seven[] = {0, 0, 1, 0, 1, 1, 0, 0}; 
+            /*
+            array[0] = 0;
+            array[1] = 0;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 0;
+            array[7] = 0;
+            break;
+
+            case 8:
+            byte eight[] = {1, 1, 1, 0, 1, 1, 1, 1}; 
+            /*
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 9:
+            byte nine[]  = {0, 1, 1, 0, 1, 1, 1, 1}; 
+            /*
+            array[0] = 0;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 1;
+            break;
+
+            case 0: 
+            byte null[]  = {1, 1, 1, 0, 1, 1, 1, 1};
+            /*
+            array[0] = 1;
+            array[1] = 1;
+            array[2] = 1;
+            array[3] = 0;
+            array[4] = 1;
+            array[5] = 1;
+            array[6] = 1;
+            array[7] = 0;
+            break;
+        }
+        */
     //{hour[0], hour[1], hour[2], hour[3], hourTen[0], hourTen[1], hourTen[2], hourTen[3], min[0], min[1], min[2], min[3], minTen[0], minTen[1], minTen[2], minTen[3], minTen[4], minTen[5], minTen[6], minTen[7], min[4], min[5], min[6], min[7], hourTen[4], hourTen[5], hourTen[6], hourTen[7], hour[4], hour[5], hour[6], hour[7]};
     //String data = String(hour[0]), String(hour[1]), String(hour[2]), String(hour[3]), String(hourTen[0]), String(hourTen[1]), String(hourTen[2]), String(hourTen[3]), String(hour[0]), String(hour[1]), String(hour[2]), String(hour[3]), String(hourTen[0]), String(hourTen[1]), String(hourTen[2]), String(hourTen[3]), String(hourTen[4]), String(hourTen[5]), String(hourTen[6]), String(hourTen[7]), String(hour[4]), String(hour[5]), String(hour[6]), String(hour[7]), String(hourTen[4]), String(hourTen[5]), String(hourTen[6]), String(hourTen[7]), String(hour[4]), String(hour[5]), String(hour[6]), String(hour[7]);
     //  creates the instructions for 7 segment displays
@@ -223,19 +332,41 @@ void setup(){
         digitalWrite(S_CLK, HIGH);
         digitalWrite(S_CLK, LOW);
     }
+}
 
-    // only for demo usage
-    for (int i = 0; i < 4; i++){
-        for (int a = 0; a < 8; a++){
-            tempFunc(nine[a]);
+
+void loop(){
+    tmElements_t tm;
+    
+    String lastValue = "";
+
+    if (RTC.read(tm)) {
+        
+        String currentValue = createCode((int)(tm.Hour/10)%10, (int)(tm.Hour)%10, (int)(tm.Minute/10)%10, (int)(tm.Minute)%10);
+        delay(1000);
+        
+        if (lastValue != currentValue){
+            dataToClock(currentValue);
+            tempFunc(0);
+            lastValue = currentValue;
+        }else{}
+    } else {
+        if (RTC.chipPresent()) {
+            Serial.println("======================================================");
+            Serial.println("                  The DS1307 is stopped.              ");
+            Serial.println("======================================================");
+            Serial.println();
+        } else {
+            Serial.println("======================================================");
+            Serial.println("    DS1307 read error!  Please check the circuitry.   ");
+            Serial.println("======================================================");
+            Serial.println();
         }
+        delay(1000);
     }
-    tempFunc(0);
-    pushData(1, 4, 3, 5);
-}  
+    delay(1000);
+}
 
-
-void loop(){}
 /*
     tmElements_t tm;
 
