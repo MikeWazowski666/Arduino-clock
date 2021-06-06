@@ -6,6 +6,19 @@
 #define S_CLK 12
 #define S_DATA 10
 
+tmElements_t tm;
+
+String lastValue = "";     
+
+bool getTime(const char *str){
+  int Hour, Min, Sec;
+  if (sscanf(str, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
+
+  tm.Hour = Hour;
+  tm.Minute = Min;
+  tm.Second = Sec;
+  return true;
+}
 
 void dataToClock(String val1){
     for (int i = 0; i < (int) val1.length(); i++){
@@ -23,7 +36,6 @@ void dataToClock(String val1){
     return;
 }
 
-
 void sendBit(int var1){
     if (var1 == 1){
         digitalWrite(S_DATA, HIGH);
@@ -36,7 +48,6 @@ void sendBit(int var1){
     digitalWrite(S_CLK, LOW);
     return;
 }
-
 
 String substituteTo7Seg(String num, bool clockUpState){
     // this function returns binary value of the called number
@@ -155,6 +166,12 @@ void setup(){
     pinMode(S_DATA, OUTPUT);
     Serial.begin(115200);
 
+
+    // get the date and time the compiler was run
+    if (getTime(__TIME__)){
+        RTC.write(tm);
+    }
+    
     // clearing all registers
     for (int i = 0; i < 36; i++){
         digitalWrite(S_DATA, LOW);
@@ -165,22 +182,19 @@ void setup(){
     }
 }
 
-
-void loop(){
-    tmElements_t tm;
-    
-    String lastValue = "";
+void loop(){    
 
     if (RTC.read(tm)) {
-        
+    
         String currentValue = createCode((int)(tm.Hour/10)%10, (int)(tm.Hour)%10, (int)(tm.Minute/10)%10, (int)(tm.Minute)%10);
-
-        if (lastValue != currentValue){
+        
+        if (lastValue.toInt() != currentValue.toInt()){
             dataToClock(currentValue);
             sendBit(0);
             lastValue = currentValue;
         }
-        delay(30000);
+
+        delay(15000);
 
     } else {
         if (RTC.chipPresent()) {
