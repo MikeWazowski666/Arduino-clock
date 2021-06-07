@@ -49,11 +49,54 @@ void sendBit(int var1){
     return;
 }
 
-String substituteTo7Seg(String num, bool clockUpState){
+String substituteTo7Seg(String num, bool clockUpState, bool dotNeeded){
     // this function returns binary value of the called number
     for (int a = 0; a < (num.length()); a++){  
         if (clockUpState == true){  
-            switch (num.substring(a, a + 1).toInt()){
+            if (dotNeeded == true){
+                switch (num.substring(a, a + 1).toInt()){
+                case 1:
+                return "0011";
+                break;
+                
+                case 2:
+                return "1101";
+                break;
+
+                case 3:
+                return "0111";
+                break;
+
+                case 4:
+                return "0011";
+                break;
+
+                case 5:
+                return "0111";
+                break;
+
+                case 6:
+                return "1111"; 
+                break;
+
+                case 7:
+                return "0011";
+                break;
+
+                case 8:
+                return "1111"; 
+                break;
+
+                case 9:
+                return "0111";
+                break;
+
+                case 0: 
+                return "1111";
+                break;
+                }
+            } else {
+                switch (num.substring(a, a + 1).toInt()){
                 case 1:
                 return "0010";
                 break;
@@ -92,7 +135,8 @@ String substituteTo7Seg(String num, bool clockUpState){
 
                 case 0: 
                 return "1110";
-                break;
+                break;}
+            
             }
         } else {
             switch (num.substring(a, a + 1).toInt()){
@@ -142,17 +186,17 @@ String substituteTo7Seg(String num, bool clockUpState){
 
 String createCode(int var_hourTen, int var_hour, int var_minTen, int var_min){
 
-    String hourTenUp = substituteTo7Seg(String(var_hourTen), true);
-    String hourTenDown = substituteTo7Seg(String(var_hourTen), false);
+    String hourTenUp = substituteTo7Seg(String(var_hourTen), true, false);
+    String hourTenDown = substituteTo7Seg(String(var_hourTen), false, false);
 
-    String hourUp = substituteTo7Seg(String(var_hour), true);
-    String hourDown = substituteTo7Seg(String(var_hour), false);
+    String hourUp = substituteTo7Seg(String(var_hour), true, true);
+    String hourDown = substituteTo7Seg(String(var_hour), false, true);
     
-    String minUp =  substituteTo7Seg(String(var_min), true);
-    String minDown =  substituteTo7Seg(String(var_min), false);
+    String minUp =  substituteTo7Seg(String(var_min), true, false);
+    String minDown =  substituteTo7Seg(String(var_min), false, false);
     
-    String minTenUp = substituteTo7Seg(String(var_minTen), true);
-    String minTenDown = substituteTo7Seg(String(var_minTen), false);
+    String minTenUp = substituteTo7Seg(String(var_minTen), true, false);
+    String minTenDown = substituteTo7Seg(String(var_minTen), false, false);
     
     // create the binary code for 7 segment display
     String code = hourDown + hourTenDown + minDown + minTenDown + minTenUp + minUp + hourTenUp + hourUp;
